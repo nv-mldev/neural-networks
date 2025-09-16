@@ -1,0 +1,60 @@
+graph LR
+    %% Input
+    I1((x))
+    
+    %% Bias terms (minimal representation)
+    D0[ ]
+    D1[ ]
+    D2[ ]
+    D3[ ]
+    Dn[ ]
+    
+    %% Sine function nodes
+    S0((sin⁰))
+    S1((sin¹))
+    S2((sin²))
+    S3((sin³))
+    Sn((sinⁿ))
+    
+    %% Output (summation node)
+    O((Σ))
+    
+    %% Final output
+    F((F_x))
+    
+    %% Connections from input to sine nodes with wave number weights
+    I1 -->|k₀| S0
+    I1 -->|k₁| S1
+    I1 -->|k₂| S2
+    I1 -->|k₃| S3
+    I1 -->|kₙ| Sn
+    
+    %% Bias connections (phase factors)
+    D0 -->|d₀| S0
+    D1 -->|d₁| S1
+    D2 -->|d₂| S2
+    D3 -->|d₃| S3
+    Dn -->|dₙ| Sn
+    
+    %% Connections from sine functions to output with amplitude weights
+    S0 -->|w₀| O
+    S1 -->|w₁| O
+    S2 -->|w₂| O
+    S3 -->|w₃| O
+    Sn -->|wₙ| O
+    
+    %% Final output connection
+    O --> F
+    
+    %% Styling
+    classDef inputNode fill:#e1f5fe,stroke:#01579b,stroke-width:3px,color:#000000
+    classDef biasNode fill:none,stroke:none,color:#000000
+    classDef sineNode fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#000000
+    classDef outputNode fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000000
+    classDef finalNode fill:#e8f5e8,stroke:#1b5e20,stroke-width:3px,color:#000000
+    
+    class I1 inputNode
+    class D0,D1,D2,D3,Dn biasNode
+    class S0,S1,S2,S3,Sn sineNode
+    class O outputNode
+    class F finalNode

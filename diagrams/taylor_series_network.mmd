@@ -1,0 +1,44 @@
+graph LR
+    %% Inputs
+    I1((x))
+    I2((x₀))
+    
+    %% Computed polynomial terms as round nodes
+    Z0((z⁰))
+    Z1((z¹))
+    Z2((z²))
+    Z3((z³))
+    Z4((zⁿ))
+    
+    %% Output (summation node)
+    O((Σ))
+    
+    %% Connections from inputs to polynomial computations
+    I1 -->|+1| Z0
+    I1 -->|+1| Z1
+    I1 -->|+1| Z2
+    I1 -->|+1| Z3
+    I1 -->|+1| Z4
+    I2 -->|-1| Z0
+    I2 -->|-1| Z1
+    I2 -->|-1| Z2
+    I2 -->|-1| Z3
+    I2 -->|-1| Z4
+    
+    %% Connections from polynomial terms to output with coefficient weights
+    Z0 -->|a₀| O
+    Z1 -->|a₁| O
+    Z2 -->|a₂| O
+    Z3 -->|a₃| O
+    Z4 -->|aₙ| O
+    
+    %% Styling
+    classDef inputNode fill:#e1f5fe,stroke:#01579b,stroke-width:3px,color:#000000
+    classDef biasNode fill:#ffecb3,stroke:#ff8f00,stroke-width:3px,color:#000000
+    classDef outputNode fill:#e8f5e8,stroke:#1b5e20,stroke-width:3px,color:#000000
+    classDef zNode fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000000
+    
+    class I1 inputNode
+    class I2 biasNode
+    class O outputNode
+    class Z0,Z1,Z2,Z3,Z4 zNode
