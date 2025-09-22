@@ -1,0 +1,1 @@
+def perceptron_learning_rule(X, y, w, learning_rate=0.1, epochs=100): 
