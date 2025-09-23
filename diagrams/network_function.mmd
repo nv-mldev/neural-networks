@@ -1,0 +1,40 @@
+graph LR
+    %% Neural Network Function Composition
+    %% Based on chapter1.tex "The Network Function" section
+    %% φ(x, y, z) = f₄(a₄ · f₃(a₃ · f₂(a₂ · f₁(a₁ · x))) + ...)
+    
+    %% Input nodes (circular like neurons)
+    X((x))
+    Y((y))
+    Z((z))
+    
+    %% Neural network layers with primitive functions
+    F1((f₁))
+    F2((f₂))
+    F3((f₃))
+    F4((f₄))
+    
+    %% Output node
+    PHI((φ))
+    
+    %% Network connections with weight labels
+    X -->|a₁| F1
+    F1 -->|a₂| F2
+    F2 -->|a₃| F3
+    F3 -->|a₄| F4
+    
+    %% Additional inputs contributing to final layer
+    Y -.->|a₅| F4
+    Z -.->|...| F4
+    
+    %% Final output
+    F4 --> PHI
+    
+    %% Styling consistent with neural network diagrams
+    classDef inputNode fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000000
+    classDef neuronNode fill:#fce4ec,stroke:#c2185b,stroke-width:3px,color:#000000
+    classDef outputNode fill:#e8f5e8,stroke:#1b5e20,stroke-width:3px,color:#000000
+    
+    class X,Y,Z inputNode
+    class F1,F2,F3,F4 neuronNode
+    class PHI outputNode
