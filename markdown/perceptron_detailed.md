@@ -60,7 +60,17 @@ For a given training example (**x**, *t*), where *t* is the true target label (0
     `y = φ(w · x + b)`
 2. **Calculate the error:** The error ε is the difference between the target and the output.
     `ε = t - y`
-3. **Update the weights and bias:** The weights and bias are updated using the error. The update rule is:
+3. **Update the weights and bias:** If there is an error (ε ≠ 0), the weights and bias are updated using the Perceptron learning rule. The update rule is applied for each misclassified input within the current epoch:
+
+    $$
+    w_i(\text{new}) = w_i(\text{old}) + \eta \cdot \epsilon \cdot x_i
+    $$
+    $$
+    b(\text{new}) = b(\text{old}) + \eta \cdot \epsilon
+    $$
+
+    - **η (eta)** is the **learning rate**, a small positive number (e.g., 0.1) that controls the step size of the updates.
+    - These updates are applied immediately for each training example that is misclassified during the epoch.
 
     $$
     w_i(\text{new}) = w_i(\text{old}) + \eta \cdot \epsilon \cdot x_i
@@ -87,6 +97,202 @@ Let's analyze the update logic:
     `w_new = w_old - η * x`
     `b_new = b_old - η`
     This update "pushes" the weight vector **w** away from the direction of **x**. The next time this input **x** is seen, the dot product **w** · **x** will be smaller, making it more likely for the sum *z* to be negative and for the output to be 0.
+
+## Vectorisation of Perceptron Learning Rule: A Matrix-Based Example
+
+To see how vectorization works in practice, let's walk through the process using a full matrix-based approach for the AND function. Instead of updating the weights after each individual sample, this method calculates the updates for all samples in the dataset (a "batch") and then applies a single, consolidated update at the end of the epoch. This is often called the "Batch Perceptron" algorithm.
+
+Let's use the AND function dataset. We'll use the bias trick, so we add a column of 1s to our input data.
+
+**1. Define the Matrices**
+
+- **Input Matrix `X` (augmented):** Each row is a data sample `(1, x₁, x₂)`.
+- **Weight Vector `W` (augmented):** A column vector `(b, w₁, w₂)^T`.
+- **Target Vector `T`:** A column vector with the true labels.
+
+$
+X = \begin{pmatrix}
+1 & 0 & 0 \\
+1 & 0 & 1 \\
+1 & 1 & 0 \\
+1 & 1 & 1
+\end{pmatrix}
+\quad
+T = \begin{pmatrix}
+0 \\
+0 \\
+0 \\
+1
+\end{pmatrix}
+$
+
+Let's initialize the weight vector `W` to zeros and use a learning rate `η = 0.1`.
+
+$
+W_0 = \begin{pmatrix}
+0 \\
+0 \\
+0
+\end{pmatrix}
+$
+
+**Epoch 1: Mathematical Flow**
+
+**Step 1: Compute Net Input `Z`**
+We calculate the net input for all samples at once by multiplying the input matrix `X` by the weight vector `W`.
+
+$
+Z = X \cdot W_0 =
+\begin{pmatrix}
+1 & 0 & 0 \\
+1 & 0 & 1 \\
+1 & 1 & 0 \\
+1 & 1 & 1
+\end{pmatrix}
+$
+
+$
+\begin{pmatrix}
+0 \\
+0 \\
+0
+\end{pmatrix}
+=
+
+\begin{pmatrix}
+(1 \cdot 0) + (0 \cdot 0) + (0 \cdot 0) \\
+(1 \cdot 0) + (0 \cdot 0) + (1 \cdot 0) \\
+(1 \cdot 0) + (1 \cdot 0) + (0 \cdot 0) \\
+(1 \cdot 0) + (1 \cdot 0) + (1 \cdot 0)
+\end{pmatrix}
+=
+
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+0
+\end{pmatrix}
+$
+
+**Step 2: Apply Activation Function to get Output `Y`**
+We apply the Heaviside step function (`φ`) to each element in `Z`. (`φ(z) = 1` if `z ≥ 0`, else `0`).
+
+$
+Y = \phi(Z) = \phi \begin{pmatrix}
+0 \\
+0 \\
+0 \\
+0
+\end{pmatrix}
+=
+
+\begin{pmatrix}
+1 \\
+1 \\
+1 \\
+1
+\end{pmatrix}
+$
+
+**Step 3: Calculate the Error Vector `E`**
+We find the error by subtracting the predicted output `Y` from the target `T`.
+
+$
+E = T - Y =
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+1
+\end{pmatrix}
+-
+
+\begin{pmatrix}
+1 \\
+1 \\
+1 \\
+1
+\end{pmatrix}
+=
+
+\begin{pmatrix}
+-1 \\
+-1 \\
+-1 \\
+0
+\end{pmatrix}
+$
+We have three misclassifications.
+
+**Step 4: Calculate the Total Weight Update `ΔW`**
+The update for each weight is the sum of `η * error * input` across all samples. This can be calculated efficiently by multiplying the transpose of the input matrix `X` with the error vector `E`.
+
+$
+\Delta W = \eta \cdot (X^T \cdot E) = 0.1 \cdot
+\begin{pmatrix}
+1 & 1 & 1 & 1 \\
+0 & 0 & 1 & 1 \\
+0 & 1 & 0 & 1
+\end{pmatrix}
+\begin{pmatrix}
+-1 \\
+-1 \\
+-1 \\
+0
+\end{pmatrix}
+$
+
+$
+\Delta W = 0.1 \cdot
+\begin{pmatrix}
+(1 \cdot -1) + (1 \cdot -1) + (1 \cdot -1) + (1 \cdot 0) \\
+(0 \cdot -1) + (0 \cdot -1) + (1 \cdot -1) + (1 \cdot 0) \\
+(0 \cdot -1) + (1 \cdot -1) + (0 \cdot -1) + (1 \cdot 0)
+\end{pmatrix}
+= 0.1 \cdot
+\begin{pmatrix}
+-3 \\
+-1 \\
+-1
+\end{pmatrix}
+=
+
+\begin{pmatrix}
+-0.3 \\
+-0.1 \\
+-0.1
+\end{pmatrix}
+$
+
+**Step 5: Update the Weight Vector `W`**
+Finally, we add the calculated update `ΔW` to our original weight vector `W_0`.
+
+$
+W_1 = W_0 + \Delta W =
+\begin{pmatrix}
+0 \\
+0 \\
+0
+\end{pmatrix}
++
+\begin{pmatrix}
+-0.3 \\
+-0.1 \\
+-0.1
+\end{pmatrix}
+=
+
+\begin{pmatrix}
+-0.3 \\
+-0.1 \\
+-0.1
+\end{pmatrix}
+$
+
+After the first epoch, our new weight vector is `W₁ = (-0.3, -0.1, -0.1)^T`. The algorithm would then proceed to Epoch 2 with this new weight vector and repeat the steps until the error vector `E` becomes all zeros.
+
+---
 
 ## 3. Geometric Interpretation: Lines, Planes, and Separability
 
@@ -179,11 +385,12 @@ After one epoch, our weight vector is **w'** = (0, 0.1, 0.1). The algorithm woul
 
 ## 5. Pseudocode
 
-Here is a simple pseudocode for training a Perceptron.
+Here is a simple pseudocode for training a Perceptron using the vectorized approach.
 
 ```text
-// Initialize weights and bias (e.g., to zeros or small random numbers)
-initialize w, b
+// Initialize augmented weight vector (w' = [b, w1, w2, ...])
+initialize w_augmented
+
 set learning_rate η
 
 // Loop for a fixed number of epochs or until convergence
@@ -191,16 +398,19 @@ for epoch = 1 to max_epochs:
   num_errors = 0
   // Iterate over each training example
   for each (x, t) in training_set:
+    // Augment input vector (x' = [1, x1, x2, ...])
+    x_augmented = augment(x)
+
     // Make a prediction
-    z = w·x + b
+    z = dot_product(w_augmented, x_augmented)
     y = step(z) // step(z) is 1 if z >= 0, else 0
 
     // If the prediction is wrong, update weights
     if y != t:
       num_errors = num_errors + 1
       error = t - y
-      w = w + η * error * x
-      b = b + η * error
+      // Vectorized update
+      w_augmented = w_augmented + η * error * x_augmented
 
   // If no errors were made in a full epoch, the model has converged
   if num_errors == 0:

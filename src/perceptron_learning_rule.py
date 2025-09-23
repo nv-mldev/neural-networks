@@ -14,8 +14,9 @@ def perceptron_learning_rule(X, t, w, learning_rate=0.1, epochs=1):
         Y = np.dot(X.transpose(), w)
         Y[Y >= 0] = 1  # step activation function
         Y[Y < 0] = 0  # step activation function
-        error = t - Y  # error calculation
-        w_update = learning_rate
+        E = t - Y  # error calculation 
+        w_update = learning_rate * np.dot(X, E)
+        print(E, w_update)
 
 
 perceptron_learning_rule(X_bias, t, w_bias, epochs=1)
