@@ -22,26 +22,6 @@ Every learning process involves these fundamental components:
 \section{What is Reasoning?}
 Reasoning is the ability to draw logical conclusions from known facts or learned knowledge. Unlike learning, reasoning relies on logical inference rather than large amounts of data.
 
-\section{From Animal Learning to Machine Learning}
-\subsection{Example: Bait Shyness in Rats}
-Rats demonstrate a fundamental learning principle through their feeding behavior:
-\begin{itemize}
-    \item They sample novel food cautiously
-    \item If the food causes illness, they avoid it in the future
-    \item Past experience directly informs future decisions
-\end{itemize}
-This natural learning process parallels challenges in machine learning.
-
-\subsection{Parallel: Spam Email Filtering}
-Consider how this biological learning principle applies to spam detection:
-\begin{itemize}
-    \item \textbf{Naive approach}: Memorize all past spam emails
-    \item \textbf{Problem}: Cannot classify previously unseen emails
-    \item \textbf{Solution}: Extract generalizable patterns (like words, phrases, or sender patterns)
-    \item \textbf{Key insight}: Both rats and spam filters must generalize from specific experiences to handle new, similar situations
-\end{itemize}
-This ability to generalize leads us to examine the different types of reasoning that enable learning and decision-making.
-
 \section{Types of Reasoning: Comprehensive Overview}
 Understanding different types of reasoning is crucial for designing effective learning systems. Each type has distinct characteristics and applications in both biological and artificial intelligence systems.
 
@@ -56,27 +36,6 @@ Understanding different types of reasoning is crucial for designing effective le
     \item Enables generalization from limited examples to broader patterns
 \end{itemize}
 
-\subsubsection{Examples Across Different Contexts}
-\textbf{Human Example:} Every cat I have ever seen has four legs. Therefore, all cats have four legs.
-
-\textbf{Animal Example:}
-\begin{itemize}
-    \item A dog learns that when its owner picks up the leash, it will probably go for a walk (experienced hundreds of times)
-    \item A squirrel learns that acorns are edible after eating many without getting sick
-\end{itemize}
-
-\textbf{Machine Learning Example:} A spam classifier learns from previously labeled emails and generalizes patterns to detect new spam messages.
-
-\textbf{Large Language Model Example:} When asked to complete "The sky is blue because...", the model has "observed" this pattern countless times in training data and induces probable completions based on statistical patterns.
-
-\subsubsection{Applications in AI/ML}
-\begin{itemize}
-    \item Deep learning model training
-    \item Pattern recognition systems
-    \item Predictive analytics
-    \item Natural language processing
-\end{itemize}
-
 \subsection{Deductive Reasoning}
 \textbf{Definition:} Deductive reasoning moves from general rules and premises to reach specific, guaranteed conclusions. It starts with a general rule and a specific case to reach a logical conclusion.
 
@@ -88,182 +47,103 @@ Understanding different types of reasoning is crucial for designing effective le
     \item Forms the basis of formal logic and mathematical proof
 \end{itemize}
 
-\subsubsection{Examples Across Different Contexts}
-\textbf{Human Example:} All men are mortal. Socrates is a man. Therefore, Socrates is mortal.
-
-\textbf{Mathematical Example:} If all squares have four sides and a shape is a square, it must have four sides.
-
-\textbf{Animal Limitation:} Animals cannot perform abstract syllogistic reasoning, such as deducing that "because all felines are carnivores and a tiger is a feline, then a tiger is a carnivore."
-
-\textbf{LLM Mimicry:} When given "All mammals have hair. A dolphin is a mammal. Therefore...", the model completes with "a dolphin has hair"---not through true logical syllogism, but by recognizing learned textual patterns from training data.
-
-\subsubsection{Applications in AI}
-\begin{itemize}
-    \item Expert systems (traditional AI)
-    \item Symbolic reasoning systems
-    \item Theorem proving
-    \item Rule-based systems
-\end{itemize}
-
-\subsubsection{Limitations}
-\begin{itemize}
-    \item LLMs lack strict logical reasoning capabilities
-    \item Most modern AI systems don't use true deductive reasoning
-    \item Requires explicit knowledge representation
-\end{itemize}
-
 \subsection{Abductive Reasoning (Inference to Best Explanation)}
 \textbf{Definition:} Abductive reasoning starts with an observation and seeks to find the simplest and most likely explanation. It's the process of finding a hypothesis that, if true, would best explain the observation.
 
-\subsubsection{Key Characteristics}
+\section{Animal Learning}
+\subsection{Example: Bait Shyness in Rats}
+Rats demonstrate a fundamental learning principle through their feeding behavior:
 \begin{itemize}
-    \item Often described as "inference to the best explanation"
-    \item Guesses the most probable explanation given incomplete data
-    \item Can be demonstrated in simple forms by animals
-    \item Simulated effectively by modern LLMs
+    \item They sample novel food cautiously
+    \item If the food causes illness, they avoid it in the future
+    \item Past experience directly informs future decisions
+\end{itemize}
+This natural learning process parallels challenges in machine learning.
+
+\section{Human Learning: The Cognitive Approach}
+Human learning is a complex and multifaceted process that has been studied extensively in psychology and neuroscience. It involves a combination of conscious and unconscious processes, leading to the acquisition of knowledge and skills that are both explicit (declarative) and implicit (procedural).
+
+\subsection{Cognitive Stages of Development}
+Jean Piaget's theory of cognitive development provides a classic framework for understanding how learning capabilities evolve from infancy to adulthood.
+\begin{itemize}
+    \item \textbf{Sensorimotor Stage (0-2 years)}: Learning occurs through sensory experiences and motor interactions with the environment. Object permanence is a key milestone.
+    \item \textbf{Preoperational Stage (2-7 years)}: Children begin to think symbolically and use words and pictures to represent objects. Their thinking is egocentric.
+    \item \textbf{Concrete Operational Stage (7-11 years)}: Children begin to think logically about concrete events. They grasp concepts like conservation.
+    \item \textbf{Formal Operational Stage (12+ years)}: Abstract reasoning and hypothetical thinking emerge.
+\end{itemize}
+This staged progression suggests that the ability to learn and the types of learning that are possible change fundamentally over a lifetime, a concept that has parallels in the development of more sophisticated machine learning models.
+
+\subsection{The Role of Memory}
+Memory is central to learning. The Atkinson-Shiffrin model is a classic theory that proposes three stages of memory:
+\begin{enumerate}
+    \item \textbf{Sensory Memory:} A very brief buffer for sensory information.
+    \item \textbf{Short-Term Memory (Working Memory):} Holds a small amount of information for a short duration. It is where conscious thought and processing occur. This is analogous to the memory (RAM) of a computer.
+    \item \textbf{Long-Term Memory:} The vast, semi-permanent storage of knowledge and skills. This is analogous to a computer's hard drive.
+\end{enumerate}
+The process of moving information from short-term to long-term memory, known as encoding, is critical for learning. Retrieval is the process of accessing this stored information. In machine learning, the "memory" is stored in the model's parameters (weights).
+
+\subsection{Learning Styles and Strategies}
+Humans employ a variety of strategies to learn, which can be broadly categorized:
+\begin{itemize}
+    \item \textbf{Rote learning:} Memorization through repetition (e.g., flashcards). This is similar to overfitting in machine learning, where a model memorizes the training data.
+    \item \textbf{Observational learning:} Learning by watching others.
+    \item \textbf{Associative learning:} Connecting stimuli or events that occur together in the environment (classical and operant conditioning).
+    \item \textbf{Cognitive learning:} Learning through understanding, reasoning, and problem-solving. This is the goal of more advanced AI systems.
 \end{itemize}
 
-\subsubsection{Examples Across Different Contexts}
-\textbf{Human Example:} The grass is wet. A plausible explanation is that it rained (most likely, though sprinklers are possible).
+\section{What is Machine Learning?}
+Machine learning is a subfield of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. At its core, machine learning involves developing models that can identify patterns in data and make predictions or decisions based on those patterns.
 
-\textbf{Medical Example:} A doctor observes symptoms like fever and cough and infers the patient likely has the flu.
-
-\textbf{Animal Example:}
+\subsection{Parallel: Spam Email Filtering}
+Consider how biological learning principles apply to spam detection:
 \begin{itemize}
-    \item A squirrel hears rustling and sees movement, "abduces" it's a predator and climbs a tree
-    \item A raven sees a human place a rock over food, infers the food is under the rock when human leaves
+    \item \textbf{Naive approach}: Memorize all past spam emails
+    \item \textbf{Problem}: Cannot classify previously unseen emails
+    \item \textbf{Solution}: Extract generalizable patterns (like words, phrases, or sender patterns)
+    \item \textbf{Key insight}: Both rats and spam filters must generalize from specific experiences to handle new, similar situations
 \end{itemize}
 
-\textbf{LLM Example:} When asked "Why is the road wet?", generates explanations like "It rained," "Water main broke," or "Street cleaner passed" by ranking probable explanations from training data.
+\section{Types of Machine Learning}
+There are three main categories of machine learning algorithms:
 
-\subsubsection{Applications in AI/ML}
-\begin{itemize}
-    \item Medical diagnosis systems
-    \item Troubleshooting AI
-    \item Natural language understanding
-    \item Creative writing and content generation
-\end{itemize}
+\subsection{Supervised Learning}
+In supervised learning, the algorithm is trained on a labeled dataset, meaning that each data point is tagged with a correct output. The goal is to learn a mapping function that can predict the output for new, unseen data. Common supervised learning tasks include classification and regression.
 
-\subsection{Additional Reasoning Types}
+\subsection{Unsupervised Learning}
+Unsupervised learning deals with unlabeled data. The algorithm tries to learn the underlying structure of the data without any explicit guidance. Common tasks include clustering, dimensionality reduction, and density estimation.
 
-\subsubsection{Analogical Reasoning (Pattern Transfer)}
-\textbf{Definition:} Analogical reasoning applies knowledge from one context to another by recognizing similar patterns or relationships.
+\subsection{Reinforcement Learning}
+Reinforcement learning is concerned with how an agent ought to take actions in an environment so as to maximize some notion of cumulative reward. The algorithm learns by trial and error, receiving feedback in the form of rewards or punishments.
 
-\textbf{Applications in AI/ML:}
-\begin{itemize}
-    \item AI-powered tutoring systems
-    \item Cross-domain learning
-    \item Transfer learning in neural networks
-\end{itemize}
+\section{The Data and Observation Model}
+In machine learning, we typically represent our data as a matrix. Let's denote the dataset as $\mathcal{D}$. A common convention is to represent the data as a design matrix, $X$.
 
-\textbf{Example:} AI that learns human speech patterns in English and transfers that learning to generate speech in another language.
+\subsection{The Design Matrix}
+The design matrix $X$ is an $m \times n$ matrix, where $m$ is the number of training examples (or observations) and $n$ is the number of features (or variables). Each row of the matrix represents a single data point, and each column represents a feature.
 
-\subsubsection{Bayesian Reasoning (Probabilistic Prediction)}
-\textbf{Definition:} Bayesian reasoning uses probability to predict outcomes by updating beliefs based on new evidence.
+$$ 
+ X = \begin{pmatrix}
+ x_{11} & x_{12} & \dots & x_{1n} \\
+x_{21} & x_{22} & \dots & x_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_{m1} & x_{m2} & \dots & x_{mn}
+\end{pmatrix}
+$$ 
 
-\textbf{Applications in AI/ML:}
-\begin{itemize}
-    \item Spam filtering systems
-    \item AI language models
-    \item Uncertainty quantification
-\end{itemize}
+Each row $i$ corresponds to a data point $\mathbf{x}_i^T$, which is a row vector of size $n$.
 
-\textbf{Example:} A Bayesian spam filter assigns probabilities to words appearing in spam emails and calculates the likelihood that a new email is spam.
+\section{Probabilistic Model of Learning}
+A powerful way to think about machine learning is from a probabilistic perspective. We can think of the learning process as finding a model that best explains the data. This is often framed as finding the parameters $\theta$ of a model that maximize the likelihood of observing the data.
 
-\subsubsection{Causal Reasoning (Understanding Cause-and-Effect)}
-\textbf{Definition:} Causal reasoning determines causal relationships rather than just correlations.
+The likelihood function is given by:
+$$ 
+\mathcal{L}(\theta | X) = P(X | \theta) 
+$$ 
 
-\textbf{Limitations in Current AI:}
-\begin{itemize}
-    \item LLMs struggle with true causality
-    \item Most AI systems identify correlations rather than causes
-\end{itemize}
-
-\textbf{Example:} In healthcare, researchers identify that smoking causes lung cancer, rather than just observing that smokers have higher cancer rates.
-
-\subsection{Reasoning Capabilities Across Intelligence Types}
-The table below compares how different types of intelligence systems handle various reasoning tasks:
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|l|l|l|l|}
-\hline
-\textbf{Reasoning Type} & \textbf{Animals} & \textbf{Large Language Models} & \textbf{Traditional AI} \\
-\hline
-\textbf{Inductive} & Primary (survival-focused) & Primary (pattern-based) & Limited \\
-\hline
-\textbf{Deductive} & Absent (complex forms) & Simulated (pattern matching) & Primary (rule-based) \\
-\hline
-\textbf{Abductive} & Limited (simple forms) & Effective (learned patterns) & Limited \\
-\hline
-\textbf{Causal} & Basic & Limited & Rule-dependent \\
-\hline
-\textbf{Adaptability} & High (within domain) & High (pattern recognition) & Low (manual updates) \\
-\hline
-\end{tabular}
-\caption{Reasoning capabilities across different types of intelligence systems.}
-\end{table}
-
-While inductive reasoning is powerful, it has inherent limitations that both animals and AI systems must navigate.
-
-\subsection{Limitations of Inductive Reasoning}
-
-\subsubsection{Pigeon Superstition Experiment (B.F. Skinner)}
-This experiment demonstrated how animals can form false associations through inductive reasoning. Pigeons were given food at random intervals, leading them to develop "superstitious" behaviors---repeating whatever action they happened to be performing when food appeared, even though these actions had no causal relationship to receiving food.
-
-\subsubsection{Garcia \& Koelling Experiment (1966)}
-This landmark experiment studied \textbf{selective associative learning} in rats and demonstrated that \textbf{not all stimuli are equally associated} with consequences.
-
-\textbf{Experimental Design:}
-Researchers used a compound stimulus approach:
-\begin{itemize}
-    \item \textbf{Taste component}: Saccharin-flavored water
-    \item \textbf{Audiovisual component}: Lights and sounds during drinking
-\end{itemize}
-
-Rats were then exposed to different aversive consequences:
-\begin{itemize}
-    \item \textbf{Group 1}: Illness (nausea from mild radiation or toxin)
-    \item \textbf{Group 2}: Physical discomfort (mild electric shocks)
-\end{itemize}
-
-\textbf{Results:}
-
-\textbf{Illness-Induced Group:}
-\begin{itemize}
-    \item Developed strong aversion to taste cues (saccharin water)
-    \item Showed minimal aversion to audiovisual cues
-\end{itemize}
-
-\textbf{Shock-Induced Group:}
-\begin{itemize}
-    \item Developed strong aversion to audiovisual cues (lights and sounds)
-    \item Showed no aversion to taste cues
-\end{itemize}
-
-\textbf{Key Finding:} Rats selectively associated specific stimuli with appropriate consequences---taste with illness, external cues with physical danger.
-
-\textbf{Scientific Impact:}
-This experiment revolutionized learning theory by:
-\begin{itemize}
-    \item \textbf{Challenging equipotentiality}: Not all stimulus-response associations are equally learnable
-    \item \textbf{Demonstrating biological constraints}: Evolution shapes what animals can easily learn
-    \item \textbf{Revealing adaptive biases}: Learning mechanisms evolved to enhance survival
-    \begin{itemize}
-        \item Taste naturally links to internal consequences (poisoning)
-        \item External cues (sounds, lights) link to external threats (predators)
-    \end{itemize}
-\end{itemize}
-
-\textbf{Implications for Machine Learning:}
-\begin{itemize}
-    \item \textbf{Learning requires inductive bias}: Not all associations are equally learnable
-    \item \textbf{Feature relevance varies}: Some inputs are more informative than others
-    \item \textbf{Domain knowledge matters}: Evolutionary or expert-designed constraints improve learning
-    \item \textbf{No universal learner exists}: All learning algorithms must make assumptions (No-Free-Lunch theorem)
-\end{itemize}
-
-These biological insights directly inform machine learning design, where inductive bias plays a crucial role in model performance.
+The goal of learning is to find the parameters $\hat{\theta}$ that maximize this likelihood. This is known as Maximum Likelihood Estimation (MLE).
+$$ 
+\hat{\theta}_{MLE} = \arg\max_{\theta} P(X | \theta)
+$$ 
 
 \section{Inductive Bias in Machine Learning}
 \subsection{What is Inductive Bias?}
@@ -294,35 +174,6 @@ Inductive bias is essential because:
     \item \textbf{In ML}: K-Nearest Neighbors (KNN) assumes nearby data points have the same label
 \end{itemize}
 
-\subsubsection{Similar Features Should Have Similar Effects}
-\begin{itemize}
-    \item \textbf{Assumption}: If two features are related, their effects should be similar
-    \item \textbf{Example}: In linear regression, correlated features often have similar coefficients
-\end{itemize}
-
-\subsubsection{Prior Knowledge About the Task (Domain-Specific Bias)}
-\begin{itemize}
-    \item \textbf{Assumption}: Certain relationships are more likely in specific tasks
-    \item \textbf{Example}: In NLP, word order matters
-    \item \textbf{In ML}: Transformers use positional embeddings to capture sentence structure
-\end{itemize}
-
-\subsubsection{Invariance Bias (Translation, Rotation, Scale Invariance)}
-\begin{itemize}
-    \item \textbf{Assumption}: Some transformations should not change predictions
-    \item \textbf{Example}: Rotating an image of a cat should still classify it as a cat
-    \item \textbf{In ML}: CNNs use convolutional filters to enforce translation invariance
-\end{itemize}
-
-\subsubsection{Sparsity Assumption}
-\begin{itemize}
-    \item \textbf{Assumption}: Only a few features are truly important
-    \item \textbf{Example}: In text classification, most words are irrelevant
-    \item \textbf{In ML}: L1 regularization forces models to select important features
-\end{itemize}
-
-These general principles manifest differently across various neural network architectures, each designed with specific inductive biases for particular tasks.
-
 \subsection{Inductive Bias in Specific Architectures}
 \subsubsection{Convolutional Neural Networks (CNNs)}
 CNNs are designed for image processing and rely on key inductive biases:
@@ -340,12 +191,6 @@ CNNs are designed for image processing and rely on key inductive biases:
     \item \textbf{Example}: Handwritten digit "3" recognized anywhere in the image
 \end{itemize}
 
-\textbf{3. Hierarchical Feature Learning}
-\begin{itemize}
-    \item \textbf{Assumption}: Complex patterns learned by stacking abstraction layers
-    \item \textbf{Example}: Lower layers detect edges $\rightarrow$ middle layers detect shapes $\rightarrow$ deeper layers detect objects
-\end{itemize}
-
 \subsubsection{Recurrent Neural Networks (RNNs \& LSTMs)}
 RNNs are designed for sequential data and rely on:
 
@@ -355,30 +200,12 @@ RNNs are designed for sequential data and rely on:
     \item \textbf{Example}: In "The cat sat on the mat", nearby words are more related
 \end{itemize}
 
-\textbf{2. Order Sensitivity Bias}
-\begin{itemize}
-    \item \textbf{Assumption}: The order of input elements matters
-    \item \textbf{Example}: "Dog bites man" $\neq$ "Man bites dog"
-\end{itemize}
-
 \subsubsection{Transformers (BERT, GPT)}
 
 \textbf{1. Attention-Based Bias (Self-Attention)}
 \begin{itemize}
     \item \textbf{Assumption}: Important words can be anywhere in a sentence
     \item \textbf{Example}: In "The dog chased the ball...which was blue", "which" refers to "ball"
-\end{itemize}
-
-\textbf{2. Context-Aware Learning Bias}
-\begin{itemize}
-    \item \textbf{Assumption}: Word meaning depends on context
-    \item \textbf{Example}: "Bank" can mean financial institution or riverbank
-\end{itemize}
-
-\textbf{3. Positional Encoding Bias}
-\begin{itemize}
-    \item \textbf{Assumption}: Order matters even without sequential processing
-    \item \textbf{Example}: "She ate an apple" $\neq$ "An apple ate she"
 \end{itemize}
 
 \section{Mathematical Foundations of Learning}
