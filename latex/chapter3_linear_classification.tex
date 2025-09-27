@@ -1,0 +1,269 @@
+% Add theorem environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\section{Learning Goals}
+
+By the end of this chapter, you will:
+
+\begin{itemize}
+    \item \textbf{Know what is meant by binary linear classification} and understand its fundamental concepts
+    \item \textbf{Understand why an explicit threshold for a classifier is redundant} and how bias terms can be eliminated using dummy features
+    \item \textbf{Be able to specify weights and biases by hand} to represent simple logical functions (AND, OR, NOT)
+    \item \textbf{Be familiar with input space and weight space}, including:
+    \begin{itemize}
+        \item Plotting training cases and classification weights in both spaces
+        \item Understanding the geometric interpretation of linear classifiers
+    \end{itemize}
+    \item \textbf{Be aware of the limitations of linear classifiers}, including:
+    \begin{itemize}
+        \item Understanding convexity and its role in linear separability
+        \item Knowing how basis function representations can overcome some limitations
+    \end{itemize}
+\end{itemize}
+
+\section{Fundas: Mathematical Foundations}
+
+\subsection{Vector Representation}
+\begin{itemize}
+    \item \textbf{Input vectors}: Each data point is represented as a $D$-dimensional vector $\bm{x}^{(i)} = [x_1^{(i)}, x_2^{(i)}, \ldots, x_D^{(i)}]$
+    \item \textbf{Weight vectors}: Classification parameters represented as $\bm{w} = [w_1, w_2, \ldots, w_D]$
+    \item \textbf{Linear combination}: $f(\bm{x}) = \bm{w}^T\bm{x} + b$, where $b$ is the bias term
+    \item \textbf{Decision boundary}: The hyperplane where $\bm{w}^T\bm{x} + b = 0$
+\end{itemize}
+
+\subsection{Binary Classification Framework}
+\begin{itemize}
+    \item \textbf{Target values}: $t^{(i)} \in \{0, 1\}$ where $0 =$ negative class, $1 =$ positive class
+    \item \textbf{Classification rule}: $\hat{y} = 1$ if $\bm{w}^T\bm{x} + b > \tau$, else $\hat{y} = 0$ (where $\tau$ is threshold)
+    \item \textbf{Training set}: $\{(\bm{x}^{(i)}, t^{(i)})\}_{i=1}^N$ where $N$ is the number of examples
+\end{itemize}
+
+\section{Introduction to Binary Classification}
+
+Binary classification represents one of the most fundamental problems in machine learning, where the goal is to predict a binary-valued target from input features. This forms the foundation for understanding more complex classification scenarios.
+
+\subsection{Real-World Applications}
+
+\subsubsection{Medical Diagnosis Systems}
+\begin{itemize}
+    \item \textbf{Problem}: Predict whether a patient has a specific disease
+    \item \textbf{Features}: Symptoms, test results, patient history
+    \item \textbf{Target}: Disease present (1) or absent (0)
+    \item \textbf{Example}: Diagnosing diabetes from glucose levels, BMI, and family history
+\end{itemize}
+
+\subsubsection{Email Spam Detection}
+\begin{itemize}
+    \item \textbf{Problem}: Classify emails as spam or legitimate
+    \item \textbf{Features}: Word frequencies, sender information, email metadata
+    \item \textbf{Target}: Spam (1) or not spam (0)
+    \item \textbf{Example}: Using keywords like ``free money'' as indicators
+\end{itemize}
+
+\subsubsection{Fraud Detection}
+\begin{itemize}
+    \item \textbf{Problem}: Identify fraudulent transactions
+    \item \textbf{Features}: Transaction amount, time, location, merchant type
+    \item \textbf{Target}: Fraudulent (1) or legitimate (0)
+    \item \textbf{Example}: Detecting unusual spending patterns
+\end{itemize}
+
+\section{Binary Linear Classifiers: First Principles}
+
+\subsection{Core Concept}
+
+A binary linear classifier makes decisions by computing a linear function of the input features and comparing the result to a threshold. This approach assumes that the two classes can be separated by a linear decision boundary in the feature space.
+
+\subsection{Mathematical Formulation}
+
+\textbf{Step 1: Linear Combination}
+\begin{equation}
+z = w_1x_1 + w_2x_2 + \cdots + w_D x_D + b
+\end{equation}
+
+\textbf{Step 2: Threshold Decision}
+\begin{equation}
+\hat{y} = \begin{cases}
+1 & \text{if } z > \tau \\
+0 & \text{otherwise}
+\end{cases}
+\end{equation}
+
+Where:
+\begin{itemize}
+    \item $w_i$: Weight for feature $i$ (determines importance and direction)
+    \item $x_i$: Value of feature $i$
+    \item $b$: Bias term (shifts the decision boundary)
+    \item $\tau$: Threshold value
+\end{itemize}
+
+\subsection{Eliminating Redundancy: The Bias-Threshold Trick}
+
+\textbf{Problem}: Having both bias ($b$) and threshold ($\tau$) is redundant.
+
+\textbf{Solution 1}: Absorb threshold into bias term:
+\begin{itemize}
+    \item Set new bias: $b' = b - \tau$
+    \item Set threshold to zero: $\tau = 0$
+    \item Decision rule becomes: $\hat{y} = 1$ if $\bm{w}^T\bm{x} + b' > 0$
+\end{itemize}
+
+\textbf{Solution 2}: Add dummy feature:
+\begin{itemize}
+    \item Extend input: $\bm{x} \rightarrow [\bm{x}, 1]$
+    \item Extend weights: $\bm{w} \rightarrow [\bm{w}, b]$
+    \item Decision rule: $\hat{y} = 1$ if $\bm{w}_{\text{extended}}^T \bm{x}_{\text{extended}} > 0$
+\end{itemize}
+
+\section{Geometric Interpretation}
+
+\subsection{Input Space Perspective}
+
+\textbf{Decision Boundary}: The hyperplane $\bm{w}^T\bm{x} + b = 0$ divides the input space into two regions:
+\begin{itemize}
+    \item \textbf{Positive region}: $\bm{w}^T\bm{x} + b > 0$ (predicted class 1)
+    \item \textbf{Negative region}: $\bm{w}^T\bm{x} + b < 0$ (predicted class 0)
+\end{itemize}
+
+\textbf{Properties}:
+\begin{itemize}
+    \item The weight vector $\bm{w}$ is perpendicular to the decision boundary
+    \item The bias $b$ determines the distance of the boundary from the origin
+    \item Moving along $\bm{w}$ increases the classifier's output
+\end{itemize}
+
+\subsection{Weight Space Perspective}
+
+\textbf{Constraint Regions}: Each training example imposes a constraint on the weight space:
+\begin{itemize}
+    \item \textbf{Positive examples}: Require $\bm{w}^T\bm{x}^{(i)} + b > 0$
+    \item \textbf{Negative examples}: Require $\bm{w}^T\bm{x}^{(i)} + b < 0$
+\end{itemize}
+
+\textbf{Feasible Region}: The intersection of all constraints defines the region of weight vectors that correctly classify all training examples.
+
+\section{Hand-Designed Logic Functions}
+
+\subsection{AND Function}
+\textbf{Truth Table}: $(0,0) \rightarrow 0$, $(0,1) \rightarrow 0$, $(1,0) \rightarrow 0$, $(1,1) \rightarrow 1$
+
+\textbf{Implementation}:
+\begin{align}
+w_1 &= 1, \quad w_2 = 1 \\
+b &= -1.5 \\
+\text{Decision}: \quad \hat{y} &= 1 \text{ if } x_1 + x_2 - 1.5 > 0
+\end{align}
+
+\textbf{Verification}:
+\begin{align}
+(0,0): \quad 0 + 0 - 1.5 &= -1.5 < 0 \rightarrow \hat{y} = 0 \quad \checkmark \\
+(1,1): \quad 1 + 1 - 1.5 &= 0.5 > 0 \rightarrow \hat{y} = 1 \quad \checkmark
+\end{align}
+
+\subsection{OR Function}
+\textbf{Implementation}:
+\begin{align}
+w_1 &= 1, \quad w_2 = 1 \\
+b &= -0.5 \\
+\text{Decision}: \quad \hat{y} &= 1 \text{ if } x_1 + x_2 - 0.5 > 0
+\end{align}
+
+\subsection{NOT Function}
+\textbf{Implementation}:
+\begin{align}
+w_1 &= -1 \\
+b &= 0.5 \\
+\text{Decision}: \quad \hat{y} &= 1 \text{ if } -x_1 + 0.5 > 0
+\end{align}
+
+\section{Limitations of Linear Classifiers}
+
+\subsection{Linear Separability}
+
+\begin{definition}[Linear Separability]
+A dataset is linearly separable if there exists a linear decision boundary that perfectly separates the two classes.
+\end{definition}
+
+\subsection{Convexity and Separability}
+
+\begin{definition}[Convex Set]
+A set is convex if the line segment between any two points in the set lies entirely within the set.
+\end{definition}
+
+\begin{theorem}[Linear Separability Condition]
+If the positive examples form a convex set and the negative examples form a convex set, and these sets do not overlap, then the data is linearly separable.
+\end{theorem}
+
+\subsection{The XOR Problem}
+
+\textbf{XOR Truth Table}: $(0,0) \rightarrow 0$, $(0,1) \rightarrow 1$, $(1,0) \rightarrow 1$, $(1,1) \rightarrow 0$
+
+\textbf{Why XOR is not linearly separable}:
+\begin{itemize}
+    \item Positive examples: $(0,1)$ and $(1,0)$
+    \item Negative examples: $(0,0)$ and $(1,1)$
+    \item No single line can separate these points correctly
+\end{itemize}
+
+\subsection{Overcoming Limitations: Basis Functions}
+
+\textbf{Strategy}: Transform inputs using basis functions $\bm{\phi}(\bm{x})$ to create a new feature space where linear separation becomes possible.
+
+\textbf{Example for XOR}:
+\begin{itemize}
+    \item Original features: $x_1, x_2$
+    \item Basis functions: $\phi_1 = x_1$, $\phi_2 = x_2$, $\phi_3 = x_1 x_2$
+    \item In the new space $[x_1, x_2, x_1 x_2]$, XOR becomes linearly separable
+\end{itemize}
+
+The transformed XOR problem becomes:
+\begin{align}
+(0,0,0) &\rightarrow 0 \\
+(0,1,0) &\rightarrow 1 \\
+(1,0,0) &\rightarrow 1 \\
+(1,1,1) &\rightarrow 0
+\end{align}
+
+With weights $w_1 = 1$, $w_2 = 1$, $w_3 = -2$, and bias $b = -0.5$:
+\begin{equation}
+\hat{y} = 1 \text{ if } x_1 + x_2 - 2x_1x_2 - 0.5 > 0
+\end{equation}
+
+\section{Practical Considerations}
+
+\subsection{Feature Engineering}
+\begin{itemize}
+    \item \textbf{Normalization}: Scale features to similar ranges
+    \item \textbf{Interaction terms}: Add products of features $(x_1 x_2)$
+    \item \textbf{Polynomial features}: Add powers of features $(x_1^2, x_2^2)$
+\end{itemize}
+
+\subsection{Model Selection}
+\begin{itemize}
+    \item \textbf{Bias-variance tradeoff}: Simple models (few features) vs. complex models (many features)
+    \item \textbf{Interpretability}: Linear classifiers provide clear feature importance through weights
+    \item \textbf{Computational efficiency}: Linear models are fast to train and evaluate
+\end{itemize}
+
+\subsection{Performance Evaluation}
+\begin{itemize}
+    \item \textbf{Training accuracy}: Percentage of training examples correctly classified
+    \item \textbf{Generalization}: Performance on unseen test data
+    \item \textbf{Decision boundary visualization}: Plot boundaries in 2D for intuition
+\end{itemize}
+
+\section{Chapter Summary}
+
+Linear classification provides a fundamental framework for understanding binary classification problems. Key takeaways:
+
+\begin{enumerate}
+    \item \textbf{Geometric intuition}: Linear classifiers create hyperplane decision boundaries in input space
+    \item \textbf{Mathematical elegance}: Simple linear combinations with threshold decisions
+    \item \textbf{Practical utility}: Many real-world problems are approximately linearly separable
+    \item \textbf{Clear limitations}: Not all problems (like XOR) can be solved with linear classifiers
+    \item \textbf{Extension possibilities}: Basis functions can transform non-linearly separable problems
+\end{enumerate}
+
+The concepts developed here—particularly the geometric interpretation in both input and weight spaces—form the foundation for understanding more sophisticated classification algorithms like the perceptron, support vector machines, and neural networks.
+
+The next chapter will introduce the \textbf{perceptron algorithm}, which provides a systematic method for learning the weights of a linear classifier from training data, moving beyond hand-designed solutions to automated learning procedures.
