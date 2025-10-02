@@ -12,6 +12,10 @@
 \usepackage{mathtools}
 \usepackage{bm}
 \usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{mdframed}
+\usepackage{media9}
 
 \geometry{a4paper, margin=1in}
 
@@ -20,6 +24,56 @@
 \date{\today}
 
 \graphicspath{{../figures/}}
+
+\definecolor{blockbg}{HTML}{E8F4FD}
+\definecolor{blockborder}{HTML}{66A3FF}
+\definecolor{blocktitle}{HTML}{0B63CE}
+\definecolor{blocktext}{HTML}{0E2A47}
+
+\definecolor{fundasbg}{HTML}{FFF9C4}
+\definecolor{fundasborder}{HTML}{FFD54F}
+\definecolor{fundastitle}{HTML}{1565C0}
+\definecolor{fundastext}{HTML}{0D47A1}
+
+\newenvironment{block}[1]{%
+  \begin{mdframed}[
+    linecolor=blockborder,
+    linewidth=1.5pt,
+    backgroundcolor=blockbg,
+    skipabove=\baselineskip,
+    skipbelow=\baselineskip,
+    innertopmargin=0.6\baselineskip,
+    innerbottommargin=0.6\baselineskip,
+    innerleftmargin=0.9em,
+    innerrightmargin=0.9em
+  ]
+  \begingroup
+  \color{blocktext}
+  \noindent\textcolor{blocktitle}{\bfseries #1}\par\medskip
+}{%
+  \endgroup
+  \end{mdframed}
+}
+
+\newenvironment{fundasblock}[1]{%
+  \begin{mdframed}[
+    linecolor=fundasborder,
+    linewidth=2pt,
+    backgroundcolor=fundasbg,
+    skipabove=\baselineskip,
+    skipbelow=\baselineskip,
+    innertopmargin=0.8\baselineskip,
+    innerbottommargin=0.8\baselineskip,
+    innerleftmargin=1em,
+    innerrightmargin=1em
+  ]
+  \begingroup
+  \color{fundastext}
+  \noindent\textcolor{fundastitle}{\bfseries\Large #1}\par\bigskip
+}{%
+  \endgroup
+  \end{mdframed}
+}
 
 \begin{document}
 
@@ -35,8 +89,5 @@
 \chapter{Linear Classification}
 \input{chapter3_linear_classification}
 
-\chapter{The Perceptron}
-\input{chapter4_perceptron}
 
 \end{document}
-

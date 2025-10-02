@@ -13,16 +13,34 @@ BIBTEX = bibtex
 # LaTeX source directory
 LATEX_DIR = latex
 
-# PDF viewer (adjust according to your system)
-# VIEWER = evince  # For Linux
-VIEWER = open    # For macOS
-# VIEWER = start   # For Windows
+# Detect operating system to choose the PDF viewer
+UNAME_S := $(shell uname -s)
+OS_NAME := $(shell if [ -f /etc/os-release ]; then . /etc/os-release && echo $$NAME; fi)
+DOCVIEWER_BIN := $(shell command -v DocumentViewer 2>/dev/null)
+EVINCE_BIN := $(shell command -v evince 2>/dev/null)
+OKULAR_BIN := $(shell command -v okular 2>/dev/null)
+
+ifeq ($(UNAME_S),Darwin)
+VIEWER = open
+else ifeq ($(OS_NAME),Ubuntu)
+ifneq ($(EVINCE_BIN),)
+VIEWER = evince
+else ifneq ($(DOCVIEWER_BIN),)
+VIEWER = DocumentViewer
+else ifneq ($(OKULAR_BIN),)
+VIEWER = okular
+else
+VIEWER = xdg-open
+endif
+else
+VIEWER = xdg-open
+endif
 
 # Default target
 all: $(MAIN).pdf
 
 # Compile the main document
-$(MAIN).pdf: $(LATEX_DIR)/$(MAIN).tex $(LATEX_DIR)/chapter1.tex
+$(MAIN).pdf: $(LATEX_DIR)/$(MAIN).tex $(LATEX_DIR)/chapter1_intro.tex $(LATEX_DIR)/chapter2_computation.tex $(LATEX_DIR)/chapter3_linear_classification.tex
 	cd $(LATEX_DIR) && $(LATEX) $(MAIN).tex
 	# Uncomment the next two lines if you have bibliography
 	# cd $(LATEX_DIR) && $(BIBTEX) $(MAIN)
@@ -52,7 +70,7 @@ view: $(MAIN).pdf
 help:
 	@echo "Available targets:"
 	@echo "  all       - Compile the complete document (default)"
-	@echo "  book      - Build, view PDF in Preview, and clean auxiliary files (one command)"
+	@echo "  book      - Build, view PDF with configured viewer, and clean auxiliary files (one command)"
 	@echo "  quick     - Quick compile (single LaTeX pass)"
 	@echo "  clean     - Remove auxiliary files"
 	@echo "  distclean - Remove all generated files including PDF"
@@ -77,10 +95,11 @@ book: $(LATEX_DIR)/$(MAIN).tex
 	cd $(LATEX_DIR) && $(LATEX) $(MAIN).tex
 	cd $(LATEX_DIR) && $(LATEX) $(MAIN).tex
 	cp $(LATEX_DIR)/$(MAIN).pdf ./
-	@echo "Opening $(MAIN).pdf in Preview..."
+	@echo "Opening $(MAIN).pdf with $(VIEWER)..."
 	$(VIEWER) $(MAIN).pdf
 	@echo "Cleaning auxiliary files..."
 	cd $(LATEX_DIR) && rm -f *.aux *.bbl *.blg *.fdb_latexmk *.fls *.log *.out *.toc *.lof *.lot *.nav *.snm *.vrb *.synctex.gz
+	rm -f $(MAIN).aux $(MAIN).toc $(MAIN).log $(MAIN).out
 	@echo "Done! PDF built, opened, and auxiliary files cleaned."
 
 .PHONY: all quick clean distclean view help force continuous book

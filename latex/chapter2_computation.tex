@@ -448,3 +448,91 @@ For a neural network with \(L\) layers, where layer \(l\) has \(n_l\) neurons:
     \item \textbf{Parallelization}: Matrix operations are highly parallelizable on GPUs
     \item \textbf{Memory-computation tradeoff}: Can reduce memory by recomputing activations
 \end{itemize}
+
+\subsection{Threshold Logic: The Foundation}
+The simplest kind of computing units used to build artificial neural networks are based on threshold logic. These computing elements are a generalization of the common logic gates used in conventional computing and, since they operate by comparing their total input with a threshold, this field of research is known as \textbf{threshold logic}.
+
+\section{McCulloch-Pitts Neuron: The First Artificial Neuron}
+The McCulloch-Pitts neuron, introduced in 1943, was the first mathematical model of an artificial neuron. It established the theoretical foundation for neural computation using threshold logic.
+
+\subsection{Mathematical Model}
+The McCulloch-Pitts neuron computes its output according to:
+\[
+y = \begin{cases}
+ 1 & \text{if } \displaystyle\sum_{i=1}^{n} w_i x_i \geq \theta \\
+ 0 & \text{otherwise}
+\end{cases}
+\]
+
+Where:
+\begin{itemize}
+    \item $x_i$ are the input values (binary: 0 or 1)
+    \item $w_i$ are the corresponding weights
+    \item $\theta$ is the threshold value
+    \item $y$ is the binary output (0 or 1)
+\end{itemize}
+
+\subsection{Logic Gate Implementation}
+The McCulloch-Pitts model can implement basic logic functions:
+
+\subsubsection{AND Gate}
+For an AND gate with two inputs:
+\begin{itemize}
+    \item Weights: $w_1 = w_2 = 1$
+    \item Threshold: $\theta = 2$
+    \item Result: Output is 1 only when both inputs are 1
+\end{itemize}
+
+\subsubsection{OR Gate}
+For an OR gate with two inputs:
+\begin{itemize}
+    \item Weights: $w_1 = w_2 = 1$
+    \item Threshold: $\theta = 1$
+    \item Result: Output is 1 when at least one input is 1
+\end{itemize}
+
+\subsection{Limitations of McCulloch-Pitts Neurons}
+\begin{itemize}
+    \item \textbf{Fixed weights}: No learning mechanism
+    \item \textbf{Binary inputs only}: Cannot handle continuous values
+    \item \textbf{Synchronous operation}: All neurons fire simultaneously
+    \item \textbf{No adaptation}: Cannot modify behavior based on experience
+\end{itemize}
+
+These limitations led to the development of the Perceptron, which introduced learning capabilities.
+
+
+\section{Historical Development of Neural Networks}
+
+\subsection{Timeline of Neural Network Evolution}
+The development of neural networks has proceeded through several distinct phases, each marked by significant theoretical breakthroughs and practical applications.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|p{1.5cm}|p{1cm}|p{3.5cm}|p{2.5cm}|p{5cm}|}
+\hline
+\textbf{Period} & \textbf{Year} & \textbf{Key Development} & \textbf{Contributors} & \textbf{Description} \\
+\hline
+\textbf{Early Foundations} & 1943 & McCulloch-Pitts Neuron & Warren McCulloch, Walter Pitts & First mathematical model of artificial neuron using threshold logic \\
+\hline
+& 1949 & Hebbian Learning Rule & Donald Hebb & "Cells that fire together, wire together" - synaptic plasticity principle \\
+\hline
+\textbf{First Generation} & 1957 & Perceptron & Frank Rosenblatt & First trainable neural network with learning algorithm \\
+\hline
+& 1960 & ADALINE/MADALINE & Bernard Widrow, Marcian Hoff & Adaptive linear neurons with delta rule learning \\
+\hline
+\textbf{Winter Period} & 1969 & Perceptron Limitations & Marvin Minsky, Seymour Papert & Proved perceptrons cannot solve XOR problem \\
+\hline
+\textbf{Revival Era} & 1982 & Hopfield Networks & John Hopfield & Recurrent networks for associative memory \\
+\hline
+& 1986 & Backpropagation & Rumelhart, Hinton, Williams & Efficient algorithm for training multi-layer networks \\
+\hline
+\textbf{Modern Era} & 2012 & AlexNet & Alex Krizhevsky, Geoffrey Hinton & Deep CNN wins ImageNet competition \\
+\hline
+& 2017 & Transformer Architecture & Vaswani et al. (Google) & Attention-based model for sequences \\
+\hline
+\end{tabular}
+\caption{Key milestones in neural network development.}
+\end{table}
+
