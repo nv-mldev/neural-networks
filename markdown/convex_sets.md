@@ -20,6 +20,7 @@ spaces are convex. This implies that if inputs x(1)
 ,...,x(N ) are all
 in the positive region, then any weighted average must also be in the
 positive region. Similarly for the negative region.
+
 2. In weight space, the feasible region is convex. The rough mathematical
 argument is as follows. Each good region (the set of weights which
 correctly classify one data point) is convex because it’s a half-space.
@@ -38,6 +39,7 @@ line segments intersect at (0.5,0.5), which means this point must
 be classified as both positive and negative, which is impossible.
 (See Figure 3.) Therefore, XOR isn’t linearly separable.
 
+![alt text](figures/pattern.png)
 Our last example was somewhat artificial. Let’s
 now turn to a somewhat more troubling, and practically relevant,
 limitation of linear classifiers. Let’s say we want to give a robot
@@ -63,3 +65,51 @@ fied as both A and B, this dataset must not be linearly separable.
 More generally, we can’t expect any linear classifier to detect a
 pattern in all possible translations. This is a serious limitation
 of linear classifiers as a basis for a vision system.
+
+Circumventing this problem by using feature represen-
+tations
+We just saw a negative result about linear classifiers. Let’s end on a more
+positive note. In Lecture 2, we saw how linear regression could be made
+more powerful using a basis function, or feature, representation. The same
+trick applies to classification. Essentially, in place of z = w T x + b, we use
+z = wT φ(x) + b, where φ(x) = (φ1(x), . . . , φD (x)) is a function mapping
+input vectors to feature vectors. Let’s see how we can represent XOR using
+carefully selected features.
+Example 5. Consider the following feature representation for
+XOR:
+φ1 (x) = x1
+φ2 (x) = x2
+φ3 (x) = x1 x2
+In this representation, our training set becomes
+φ1 (x)
+ φ2(x)
+ φ3 (x)
+ t
+0
+ 0
+ 0
+ 0
+0
+ 1
+ 0
+ 1
+1
+ 0
+ 0
+ 1
+1
+ 1
+ 1
+ 0
+Using the same techniques as in Examples 1 and 2, we find that
+the following set of weights and biases correctly classifies all the
+training examples:
+b = −0.5
+ w1 = 1
+ w2 = 1
+ w3 = −2.
+The only problem is, where do we get the features from? In this example,
+we just pulled them out of a hat. Unfortunately, there’s no recipe for coming
+up with good features, which is part of what makes machine learning hard.
+But next week, we’ll see how we can learn a set of features by training a
+multilayer neural net.
