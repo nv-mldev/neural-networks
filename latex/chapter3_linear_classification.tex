@@ -942,15 +942,52 @@ W_1 = W_0 + \Delta W =
 \]
 After the first epoch, our new weight vector is \(W_1 = (-0.3, -0.1, -0.1)^T\).
 
-
+\begin{codelink}[Colab Notebook]{https://colab.research.google.com/drive/1lcpmlWTB3Dgg-qgBahqPcuOopA0RvoCZ?usp=sharing}
+\end{codelink}
 
 \section{Limitations of Linear Classifiers}
 
 \subsection{Linear Separability}
 
 \begin{definition}[Linear Separability]
-A dataset is linearly separable if there exists a linear decision boundary that perfectly separates the two classes.
+A dataset is linearly separable if there exists a hyperplane that can separate all positive examples from all negative examples without any misclassification.
 \end{definition}
+
+\subsection{The XOR Problem}
+\textbf{XOR Truth Table}: $(0,0) \rightarrow 0$, $(0,1) \rightarrow 1$, $(1,0) \rightarrow 1$, $(1,1) \rightarrow 0$
+
+\textbf{Why XOR is not linearly separable}:
+\begin{itemize}
+    \item Positive examples: $(0,1)$ and $(1,0)$
+    \item Negative examples: $(0,0)$ and $(1,1)$
+    \item No single line can separate these points correctly
+\end{itemize}
+
+\textbf{Mathematical Proof of Non-Linear Separability}:
+Assume there exists a linear classifier \(\mathbf{w}^T \mathbf{x} + b = 0\) that separates XOR data.
+For the four points, we need:
+\begin{align}
+w_1 \cdot 0 + w_2 \cdot 0 + b &< 0 \quad \text{(point (0,0))} \\
+w_1 \cdot 0 + w_2 \cdot 1 + b &> 0 \quad \text{(point (0,1))} \\
+w_1 \cdot 1 + w_2 \cdot 0 + b &> 0 \quad \text{(point (1,0))} \\
+w_1 \cdot 1 + w_2 \cdot 1 + b &< 0 \quad \text{(point (1,1))}
+\end{align}
+
+From equations (1) and (2): \(b < 0\) and \(w_2 + b > 0 \Rightarrow w_2 > -b > 0\)
+From equations (1) and (3): \(b < 0\) and \(w_1 + b > 0 \Rightarrow w_1 > -b > 0\)
+From equation (4): \(w_1 + w_2 + b < 0\)
+
+But this contradicts \(w_1 > -b\) and \(w_2 > -b\), since:
+\[w_1 + w_2 + b > -b + (-b) + b = -b > 0\]
+
+Therefore, no linear separator exists for XOR.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{xor_not_linearly_separable}
+    \caption{XOR Problem: No single straight line can separate the two classes correctly. Various linear decision boundaries are shown, all of which misclassify at least one data point.}
+    \label{fig:xor_not_linearly_separable}
+\end{figure}
 
 \subsection{Convexity and Separability}
 
@@ -962,16 +999,12 @@ A set is convex if the line segment between any two points in the set lies entir
 If the positive examples form a convex set and the negative examples form a convex set, and these sets do not overlap, then the data is linearly separable.
 \end{theorem}
 
-\subsection{The XOR Problem}
-
-\textbf{XOR Truth Table}: $(0,0) \rightarrow 0$, $(0,1) \rightarrow 1$, $(1,0) \rightarrow 1$, $(1,1) \rightarrow 0$
-
-\textbf{Why XOR is not linearly separable}:
-\begin{itemize}
-    \item Positive examples: $(0,1)$ and $(1,0)$
-    \item Negative examples: $(0,0)$ and $(1,1)$
-    \item No single line can separate these points correctly
-\end{itemize}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{xor_convexity_violation}
+    \caption{XOR Problem: Violation of convexity requirement. The red dotted line connects Class 0 points (0,0) and (1,1), while the blue dotted line connects Class 1 points (0,1) and (1,0). These lines intersect at (0.5, 0.5), demonstrating that neither class forms a convex set. This intersection is a clear indication of why XOR cannot be linearly separated.}
+    \label{fig:xor_convexity_violation}
+\end{figure}
 
 \subsection{Overcoming Limitations: Basis Functions}
 
@@ -1020,72 +1053,45 @@ With weights $w_1 = 1$, $w_2 = 1$, $w_3 = -2$, and bias $b = -0.5$:
     \item \textbf{Decision boundary visualization}: Plot boundaries in 2D for intuition
 \end{itemize}
 
-\section{Limitations of the Perceptron}
-\subsection{Linear Separability Constraint}
-The fundamental limitation of the perceptron is that it can only learn linearly separable functions.
-
-\subsubsection{Definition: Linear Separability}
-A dataset is \textbf{linearly separable} if there exists a hyperplane that perfectly separates the positive and negative examples:
-\[\exists \mathbf{w}, b : y_i(\mathbf{w}^T \mathbf{x}_i + b) > 0 \quad \forall i\]
-
-\subsubsection{The XOR Problem (Minsky \& Papert, 1969)}
-Consider the XOR function:
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-\(x_1\) & \(x_2\) & XOR \\
-\hline
-0 & 0 & 0 \\
-0 & 1 & 1 \\
-1 & 0 & 1 \\
-1 & 1 & 0 \\
-\hline
-\end{tabular}
-\end{center}
-
-\textbf{Mathematical Proof of Non-Linear Separability}:
-Assume there exists a linear classifier \(\mathbf{w}^T \mathbf{x} + b = 0\) that separates XOR data.
-For the four points, we need:
-\begin{align}
-w_1 \cdot 0 + w_2 \cdot 0 + b &< 0 \quad \text{(point (0,0))} \\
-w_1 \cdot 0 + w_2 \cdot 1 + b &> 0 \quad \text{(point (0,1))} \\
-w_1 \cdot 1 + w_2 \cdot 0 + b &> 0 \quad \text{(point (1,0))} \\
-w_1 \cdot 1 + w_2 \cdot 1 + b &< 0 \quad \text{(point (1,1))}
-\end{align}
-
-From equations (1) and (2): \(b < 0\) and \(w_2 + b > 0 \Rightarrow w_2 > -b > 0\)
-From equations (1) and (3): \(b < 0\) and \(w_1 + b > 0 \Rightarrow w_1 > -b > 0\)
-From equation (4): \(w_1 + w_2 + b < 0\)
-
-But this contradicts \(w_1 > -b\) and \(w_2 > -b\), since:
-\[w_1 + w_2 + b > -b + (-b) + b = -b > 0\]
-
-Therefore, no linear separator exists for XOR.
-
-\subsection{Solutions to Linear Separability Limitation}
-\subsubsection{Multi-Layer Perceptrons (MLPs)}
+\section{Solutions to Linear Classifier Limitations}
 \begin{itemize}
-    \item Add hidden layers with non-linear activation functions
-    \item Can approximate any continuous function (Universal Approximation Theorem)
-    \item Require more sophisticated training algorithms (backpropagation)
-\end{itemize}
-
-\subsubsection{Feature Engineering}
-\begin{itemize}
-    \item Transform input space to make data linearly separable
-    \item For XOR: Add feature \(x_3 = x_1 \oplus x_2\) (though this requires knowing the solution)
-    \item Kernel methods: Implicitly map to higher-dimensional spaces
-\end{itemize}
-
-\subsubsection{Ensemble Methods}
-\begin{itemize}
-    \item Combine multiple linear classifiers
-    \item Voting or weighted combination schemes
-    \item Can learn non-linear decision boundaries
+    \item \textbf{Multi-Layer Perceptrons (MLPs)}:
+    \begin{itemize}
+        \item Add hidden layers with non-linear activation functions
+        \item Can approximate any continuous function (Universal Approximation Theorem)
+        \item Require more sophisticated training algorithms (backpropagation)
+    \end{itemize}
+    
+    \item \textbf{Feature Engineering}:
+    \begin{itemize}
+        \item Transform input space to make data linearly separable
+        \item Kernel methods: Implicitly map to higher-dimensional spaces
+    \end{itemize}
+    
+    \item \textbf{Ensemble Methods}:
+    \begin{itemize}
+        \item Combine multiple linear classifiers
+        \item Voting or weighted combination schemes
+        \item Can learn non-linear decision boundaries
+    \end{itemize}
 \end{itemize}
 
 \section{Historical Impact and Legacy}
-\subsection{The Perceptron Controversy}
+The 1969 book "Perceptrons" by Minsky and Papert highlighted the limitations of single-layer perceptrons, leading to:
+\begin{itemize}
+    \item \textbf{AI Winter}: Reduced funding and interest in neural networks
+    \item \textbf{Focus shift}: Emphasis moved to symbolic AI and expert systems
+    \item \textbf{Delayed progress}: Multi-layer networks existed but lacked efficient training methods
+\end{itemize}
+
+\subsection{Modern Relevance}
+Despite limitations, perceptrons remain important because:
+\begin{itemize}
+    \item \textbf{Building blocks}: Neurons in modern deep networks are perceptron variants
+    \item \textbf{Theoretical foundation}: Understanding linear classifiers is crucial
+    \item \textbf{Computational efficiency}: Still useful for linearly separable problems
+    \item \textbf{Online learning}: Perceptron learning rule works in streaming settings
+\end{itemize}
 The 1969 book "Perceptrons" by Minsky and Papert highlighted the limitations of single-layer perceptrons, leading to:
 \begin{itemize}
     \item \textbf{AI Winter}: Reduced funding and interest in neural networks

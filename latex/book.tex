@@ -35,6 +35,11 @@
 \definecolor{fundastitle}{HTML}{1565C0}
 \definecolor{fundastext}{HTML}{0D47A1}
 
+\definecolor{codelinkbg}{HTML}{F0F4F8}
+\definecolor{codelinkborder}{HTML}{8B9DC3}
+\definecolor{codelinktitle}{HTML}{2E5090}
+\definecolor{codelinktext}{HTML}{1A2942}
+
 \newenvironment{block}[1]{%
   \begin{mdframed}[
     linecolor=blockborder,
@@ -75,6 +80,27 @@
   \end{mdframed}
 }
 
+\newenvironment{codelink}[2][Code]{%
+  \begin{mdframed}[
+    linecolor=codelinkborder,
+    linewidth=1pt,
+    backgroundcolor=codelinkbg,
+    skipabove=0.8\baselineskip,
+    skipbelow=0.8\baselineskip,
+    innertopmargin=0.5\baselineskip,
+    innerbottommargin=0.5\baselineskip,
+    innerleftmargin=1em,
+    innerrightmargin=1em,
+    roundcorner=3pt
+  ]
+  \begingroup
+  \color{codelinktext}
+  \noindent\textcolor{codelinktitle}{\bfseries #1:} \href{#2}{\texttt{#2}}\par
+}{%
+  \endgroup
+  \end{mdframed}
+}
+
 \begin{document}
 
 \maketitle
@@ -87,7 +113,4 @@
 \input{chapter2_computation}
 
 \chapter{Linear Classification}
-\input{chapter3_linear_classification}
-
-
-\end{document}
+\input{chapter3_linear_classification}end{document}
